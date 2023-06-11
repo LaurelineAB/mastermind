@@ -53,7 +53,7 @@ window.addEventListener("DOMContentLoaded", function() {
             hex: "#000"
         },
         
-    ]
+    ];
     
     //Sélection des couleurs
     function colorButtons ()
@@ -69,6 +69,20 @@ window.addEventListener("DOMContentLoaded", function() {
         }
     }
     
+    //Générer la séquence à deviner
+    function generateColors ()
+    {
+        let toGuess = [];
+        
+        for (let i=0; i<4; i++)
+        {
+            let colorId = Math.floor(Math.random() * 10);
+            toGuess.push(colorId);
+        }
+        console.log(toGuess);
+    }
+    
     
     colorButtons();
+    generateColors();
 })
