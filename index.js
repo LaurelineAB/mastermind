@@ -54,6 +54,7 @@ window.addEventListener("DOMContentLoaded", function() {
         },
         
     ];
+    let nbOfTry = 0;
     
     //Sélection des couleurs
     function colorButtons ()
@@ -63,14 +64,14 @@ window.addEventListener("DOMContentLoaded", function() {
         for (color of colors)
         {
             let button = document.createElement("button");
-            button.id = color.name;
+            button.id = color.id;
             section.appendChild(button);
             button.style.backgroundColor = color.hex;
         }
     }
     
     //Générer la séquence à deviner
-    function generateColors ()
+    function generateGuess ()
     {
         let toGuess = [];
         
@@ -82,7 +83,53 @@ window.addEventListener("DOMContentLoaded", function() {
         console.log(toGuess);
     }
     
+    //User sequence
+    function userSequence ()
+    {
+        let sequence = [];
+        let colorBtns = document.querySelectorAll("#color-choice button");
+        
+        for (button of colorBtns)
+        {
+            button.addEventListener("click", function(event)
+            {
+                let clicked = event.target;
+                let stage = document.getElementById("stage");
+                
+                if (sequence.length === 0)
+                {
+                    let section = document.createElement("section");
+                    stage.appendChild(section);
+                    section.id = `try-nb-${nbOfTry}`;
+                    section.style.width = "calc(80px * 4)";
+                }
+                if (sequence.length < 4)
+                {
+                    let section = document.getElementById(`try-nb-${nbOfTry}`)
+                    let div = document.createElement("div");
+                    section.appendChild(div);
+                    div.style.backgroundColor = colors[clicked.id].hex;
+                    sequence.push(parseInt(clicked.id));
+                }
+                console.log(sequence);
+            });
+        }
+        
+        let eraseBtn = document.getElementById("erase-button");
+        eraseBtn.addEventListener("click", function() 
+        {
+            if (sequence.length !== 0)
+            {
+                sequence.pop();
+                let erased = document.querySelector(`#try-nb-${nbOfTry} div:last-of-type`);
+                erased.remove();
+            }
+            
+        });
+    }
+    
     
     colorButtons();
-    generateColors();
+    generateGuess();
+    userSequence();
 })
