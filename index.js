@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoader", function() {
+window.addEventListener("DOMContentLoaded", function() {
     
     let colors =
     [
@@ -42,7 +42,33 @@ window.addEventListener("DOMContentLoader", function() {
             name: "pink",
             hex: "#f202b6"
         },
+        {
+            id: 8,
+            name: "white",
+            hex: "#fff"
+        },
+        {
+            id: 9,
+            name: "black",
+            hex: "#000"
+        },
         
     ]
     
+    //Sélection des couleurs
+    function colorButtons ()
+    {
+        let section = document.getElementById("color-choice");
+        
+        for (color of colors)
+        {
+            let button = document.createElement("button");
+            button.id = color.name;
+            section.appendChild(button);
+            button.style.backgroundColor = color.hex;
+        }
+    }
+    
+    
+    colorButtons();
 })

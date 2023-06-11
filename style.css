@@ -1,0 +1,11 @@
+#color-choice {
+    text-align: center;
+}
+
+button {
+    width:70px;
+    height: 70px;
+    margin: 1em;
+    border-radius:50%;
+    border: 2px solid black;
+}
