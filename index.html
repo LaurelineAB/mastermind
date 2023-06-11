@@ -6,14 +6,27 @@
     <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
+    <header>
+        <h1 class="hidden">Trouvez la bonne composition de couleurs</h1>
+        <h2>Choisissez la longueur de la séquence à reproduire :
+            <form>
+                <select name="length" id="choose-sequence-length">
+                    <option value="4">4 couleurs</option>
+                    <option value="5">5 couleurs</option>
+                    <option value="6">6 couleurs</option>
+                    <option value="7">7 couleurs</option>
+                </select>
+                <button id="validate-length-choice">Valider</button>
+            </form>
+        </h2>
+    </header>
     <main>
-        <section>
-            <section id="color-choice">
-            </section>
-            <section class="buttons">
-                <button id="erase-button">Effacer</button>
-                <button id="validate-button">Valider</button>
-            </section>
+        <section id="color-choice">
+            
+        </section>
+        <section class="buttons hidden">
+            <button id="erase-button">Effacer</button>
+            <button id="validate-button">Vérifier</button>
         </section>
         <section id="stage">
             

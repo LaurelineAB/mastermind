@@ -55,6 +55,10 @@ window.addEventListener("DOMContentLoaded", function() {
         
     ];
     let nbOfTry = 0;
+    let lengthChosen;
+    let toGuess = [];
+    let verifSequence = 0;
+
     
     //Sélection des couleurs
     function colorButtons ()
@@ -73,19 +77,36 @@ window.addEventListener("DOMContentLoaded", function() {
     //Générer la séquence à deviner
     function generateGuess ()
     {
-        let toGuess = [];
         
-        for (let i=0; i<4; i++)
-        {
-            let colorId = Math.floor(Math.random() * 10);
-            toGuess.push(colorId);
-        }
-        console.log(toGuess);
+        let lengthChoiceBtn = document.getElementById("validate-length-choice");
+        lengthChoiceBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            lengthChosen = (document.getElementById("choose-sequence-length")).value;
+            
+            let h1 = document.querySelector("h1");
+            let h2 = document.querySelector("h2");
+            let buttons = document.querySelector(".buttons");
+            
+            h1.classList.remove("hidden");
+            h2.classList.add("hidden");
+            buttons.classList.remove("hidden");
+
+            /*for (let i=0; i<lengthChosen; i++)
+            {
+                let colorId = Math.floor(Math.random() * 10);
+                toGuess.push(colorId);
+            }*/
+            toGuess = [0, 1, 2, 3];
+            // console.log(toGuess);
+        });
+
+        
     }
     
     //User sequence
     function userSequence ()
     {
+        
         let sequence = [];
         let colorBtns = document.querySelectorAll("#color-choice button");
         
@@ -101,11 +122,11 @@ window.addEventListener("DOMContentLoaded", function() {
                     let section = document.createElement("section");
                     stage.appendChild(section);
                     section.id = `try-nb-${nbOfTry}`;
-                    section.style.width = "calc(80px * 4)";
+                    section.style.width = `calc(80px * ${lengthChosen})`;
                 }
-                if (sequence.length < 4)
+                if (sequence.length < lengthChosen)
                 {
-                    let section = document.getElementById(`try-nb-${nbOfTry}`)
+                    let section = document.getElementById(`try-nb-${nbOfTry}`);
                     let div = document.createElement("div");
                     section.appendChild(div);
                     div.style.backgroundColor = colors[clicked.id].hex;
@@ -126,10 +147,58 @@ window.addEventListener("DOMContentLoaded", function() {
             }
             
         });
+        
+        let validateBtn = document.getElementById("validate-button");
+        validateBtn.addEventListener("click", function() {
+            if (sequence.length < lengthChosen)
+            {
+                window.alert(`Votre composition est trop courte : la séquence à trouver comporte ${lengthChosen} couleurs.`);
+            }
+            else
+            {
+                let section = document.createElement("section");
+                let stage = document.getElementById("stage");
+                stage.appendChild(section);
+                section.id = `verification-nb-${nbOfTry+1}`;
+                section.style.width = `calc(80px * ${lengthChosen})`;
+                // let verifSequence = 0;
+                for (let i=0; i<lengthChosen; i++)
+                {
+                    if (sequence[i] === toGuess[i])
+                    {
+                        let div = document.createElement("div");
+                        section.appendChild(div);
+                        div.style.backgroundColor = "#2cd323";
+                        verifSequence++;
+                        console.log(verifSequence);
+                        if (verifSequence === parseInt(lengthChosen))
+                        {
+                            window.alert("Victoire !");
+                        }
+                    }
+                    else if (sequence[i] !== toGuess[i] && toGuess.includes(sequence[i]))
+                    {
+                        let div = document.createElement("div");
+                        section.appendChild(div);
+                        div.style.backgroundColor = "#f93c07";
+                    }
+                    else
+                    {
+                        let div = document.createElement("div");
+                        section.appendChild(div);
+                        div.style.backgroundColor = "#000";
+                    }
+                }
+                nbOfTry++;
+                // sequence=[];
+                // userSequence();
+            }
+        });
     }
     
     
     colorButtons();
     generateGuess();
     userSequence();
+
 })
