@@ -22,7 +22,14 @@ header form button {
     font-size: 1rem;
 }
 
+.sticky {
+    position:sticky;
+    top:0;
+}
 #color-choice {
+    /*position:sticky;*/
+    /*top:0;*/
+    background-color: #fff;
     text-align: center;
 }
 
@@ -35,7 +42,10 @@ header form button {
 }
 
 .buttons {
+    /*position: sticky;*/
+    /*top:100px;*/
     padding: 1em;
+    background-color: #fff;
     text-align: center;
 }
 .buttons button {

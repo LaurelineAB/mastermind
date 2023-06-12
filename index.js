@@ -54,10 +54,12 @@ window.addEventListener("DOMContentLoaded", function() {
         },
         
     ];
+    let maxTries = 2;
     let nbOfTry = 0;
     let lengthChosen;
     let toGuess = [];
-    let verifSequence = 0;
+    // let verifSequence = 0;
+    // let victory = false;
 
     
     //Sélection des couleurs
@@ -77,7 +79,7 @@ window.addEventListener("DOMContentLoaded", function() {
     //Générer la séquence à deviner
     function generateGuess ()
     {
-        
+        // let toGuess = [];
         let lengthChoiceBtn = document.getElementById("validate-length-choice");
         lengthChoiceBtn.addEventListener("click", function(event) {
             event.preventDefault();
@@ -91,22 +93,23 @@ window.addEventListener("DOMContentLoaded", function() {
             h2.classList.add("hidden");
             buttons.classList.remove("hidden");
 
-            /*for (let i=0; i<lengthChosen; i++)
+            for (let i=0; i<lengthChosen; i++)
             {
                 let colorId = Math.floor(Math.random() * 10);
                 toGuess.push(colorId);
-            }*/
-            toGuess = [0, 1, 2, 3];
-            // console.log(toGuess);
+            }
+            // toGuess = [0, 1, 2, 3];
+            console.log(toGuess);
         });
 
-        
+        return toGuess;
     }
     
     //User sequence
-    function userSequence ()
+    function userSequence (/*nbOfTry*/)
     {
-        
+    // while (nbOfTry < maxTries && verifSequence !== lengthChosen){
+            
         let sequence = [];
         let colorBtns = document.querySelectorAll("#color-choice button");
         
@@ -161,7 +164,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 stage.appendChild(section);
                 section.id = `verification-nb-${nbOfTry+1}`;
                 section.style.width = `calc(80px * ${lengthChosen})`;
-                // let verifSequence = 0;
+                let verifSequence = 0;
                 for (let i=0; i<lengthChosen; i++)
                 {
                     if (sequence[i] === toGuess[i])
@@ -170,32 +173,40 @@ window.addEventListener("DOMContentLoaded", function() {
                         section.appendChild(div);
                         div.style.backgroundColor = "#2cd323";
                         verifSequence++;
-                        console.log(verifSequence);
                         if (verifSequence === parseInt(lengthChosen))
                         {
                             window.alert("Victoire !");
+                            // victory = true;
                         }
                     }
-                    else if (sequence[i] !== toGuess[i] && toGuess.includes(sequence[i]))
+                    else 
                     {
-                        let div = document.createElement("div");
-                        section.appendChild(div);
-                        div.style.backgroundColor = "#f93c07";
-                    }
-                    else
-                    {
-                        let div = document.createElement("div");
-                        section.appendChild(div);
-                        div.style.backgroundColor = "#000";
+                        if (sequence[i] !== toGuess[i] && toGuess.includes(sequence[i]))
+                        {
+                            let div = document.createElement("div");
+                            section.appendChild(div);
+                            div.style.backgroundColor = "#f93c07";
+                        }
+                        else
+                        {
+                            let div = document.createElement("div");
+                            section.appendChild(div);
+                            div.style.backgroundColor = "#000";
+                        }
+                        // nbOfTry++;
+                        // sequence=[];
+                        // userSequence();
                     }
                 }
                 nbOfTry++;
-                // sequence=[];
+                sequence=[];
                 // userSequence();
             }
         });
+    // }
     }
     
+   
     
     colorButtons();
     generateGuess();
