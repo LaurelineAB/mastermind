@@ -119,10 +119,12 @@ window.addEventListener("DOMContentLoaded", function() {
             {
                 let clicked = event.target;
                 let stage = document.getElementById("stage");
+                //let anchor = document.getElementById("anchor");
                 
                 if (sequence.length === 0)
                 {
                     let section = document.createElement("section");
+                    // stage.insertBefore(section,anchor);
                     stage.appendChild(section);
                     section.id = `try-nb-${nbOfTry}`;
                     section.style.width = `calc(80px * ${lengthChosen})`;
@@ -161,6 +163,8 @@ window.addEventListener("DOMContentLoaded", function() {
             {
                 let section = document.createElement("section");
                 let stage = document.getElementById("stage");
+                //let anchor = document.getElementById("anchor");
+                // stage.insertBefore(section,anchor);
                 stage.appendChild(section);
                 section.id = `verification-nb-${nbOfTry+1}`;
                 section.style.width = `calc(80px * ${lengthChosen})`;
@@ -175,8 +179,24 @@ window.addEventListener("DOMContentLoaded", function() {
                         verifSequence++;
                         if (verifSequence === parseInt(lengthChosen))
                         {
-                            window.alert("Victoire !");
+                            //window.alert("Victoire !");
                             // victory = true;
+                            let modale = document.getElementById("modale");
+                            let combo = document.getElementById("secret-combo");
+                            combo.style.width = `calc(80px * ${lengthChosen})`;
+                            for (let x=0; x<toGuess.length; x++)
+                            {
+                                let div = document.createElement("div");
+                                combo.appendChild(div);
+                                div.style.backgroundColor = colors[toGuess[x]].hex;
+                            }
+                            modale.classList.remove("hidden");
+                            modale.classList.add("visible");
+                            let cancel = document.getElementById("cancel");
+                            cancel.addEventListener("click", function() {
+                                modale.classList.add("hidden");
+                                modale.classList.remove("visible");
+                            });
                         }
                     }
                     else 
