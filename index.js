@@ -59,7 +59,6 @@ window.addEventListener("DOMContentLoaded", function() {
     let lengthChosen;
     let toGuess = [];
     // let verifSequence = 0;
-    // let victory = false;
 
     
     //Sélection des couleurs
@@ -98,15 +97,20 @@ window.addEventListener("DOMContentLoaded", function() {
                 let colorId = Math.floor(Math.random() * 10);
                 toGuess.push(colorId);
             }
-            // toGuess = [0, 1, 2, 3];
             console.log(toGuess);
         });
 
         return toGuess;
     }
     
+    //To pin scrolling to the bottom
+    function scrolling ()
+    {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+    
     //User sequence
-    function userSequence (/*nbOfTry*/)
+    function userSequence ()
     {
     // while (nbOfTry < maxTries && verifSequence !== lengthChosen){
             
@@ -119,15 +123,16 @@ window.addEventListener("DOMContentLoaded", function() {
             {
                 let clicked = event.target;
                 let stage = document.getElementById("stage");
-                //let anchor = document.getElementById("anchor");
+                let anchor = document.getElementById("anchor");
                 
                 if (sequence.length === 0)
                 {
                     let section = document.createElement("section");
-                    // stage.insertBefore(section,anchor);
-                    stage.appendChild(section);
+                    stage.insertBefore(section,anchor);
+                    // stage.appendChild(section);
                     section.id = `try-nb-${nbOfTry}`;
                     section.style.width = `calc(80px * ${lengthChosen})`;
+                    // scrolling();
                 }
                 if (sequence.length < lengthChosen)
                 {
@@ -138,9 +143,10 @@ window.addEventListener("DOMContentLoaded", function() {
                     sequence.push(parseInt(clicked.id));
                 }
                 console.log(sequence);
+                scrolling();
             });
         }
-        
+
         let eraseBtn = document.getElementById("erase-button");
         eraseBtn.addEventListener("click", function() 
         {
@@ -163,9 +169,9 @@ window.addEventListener("DOMContentLoaded", function() {
             {
                 let section = document.createElement("section");
                 let stage = document.getElementById("stage");
-                //let anchor = document.getElementById("anchor");
-                // stage.insertBefore(section,anchor);
-                stage.appendChild(section);
+                let anchor = document.getElementById("anchor");
+                stage.insertBefore(section,anchor);
+                // stage.appendChild(section);
                 section.id = `verification-nb-${nbOfTry+1}`;
                 section.style.width = `calc(80px * ${lengthChosen})`;
                 let verifSequence = 0;
@@ -179,8 +185,6 @@ window.addEventListener("DOMContentLoaded", function() {
                         verifSequence++;
                         if (verifSequence === parseInt(lengthChosen))
                         {
-                            //window.alert("Victoire !");
-                            // victory = true;
                             let modale = document.getElementById("modale");
                             let combo = document.getElementById("secret-combo");
                             combo.style.width = `calc(80px * ${lengthChosen})`;
@@ -221,6 +225,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 nbOfTry++;
                 sequence=[];
                 // userSequence();
+                scrolling();
             }
         });
     // }
